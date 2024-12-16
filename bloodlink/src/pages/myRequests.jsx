@@ -46,7 +46,7 @@ const requestsData = [
   },
 ];
 
-const Requests = () => {
+const MyRequests = () => {
   const [filters, setFilters] = useState({ bloodGroup: "", date: "" });
   const [filteredRequests, setFilteredRequests] = useState(requestsData);
 
@@ -82,7 +82,7 @@ const Requests = () => {
 
   // Navigate to details page
   const viewDetails = (id) => {
-    navigate(`/requests/${id}`);
+    navigate(`/myRequests/${id}`);
   };
 
   return (
@@ -224,4 +224,4 @@ const styles = {
   },
 };
 
-export default Requests;
+export default MyRequests;

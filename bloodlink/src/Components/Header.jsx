@@ -16,8 +16,8 @@ const Header = () => {
           <Link to="/Requests" style={styles.link}>
             Requests
           </Link>
-          <Link to="/your_request" style={styles.link}>
-            Your Requests
+          <Link to="/myRequests" style={styles.link}>
+            My Requests
           </Link>
         </nav>
       </div>
