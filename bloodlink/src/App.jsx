@@ -18,7 +18,7 @@ function App() {
       <div>
         <Routes>
           {/* Define routes for each page */}
-          <Route path="home" element={<HomePage />} />
+          <Route path="/" element={<HomePage />} />
           {/* 
           <Route path="request" element={<Request />} />
            */}
