@@ -1,18 +1,14 @@
 {
   "name": "bloodlink-backend",
-  "version": "1.0.0",
-  "description": "Backend for Bloodlink project",
-  "main": "index.js",
-  "type": "module",
-  "scripts": {
-    "start": "node index.js"
+  "module": "index.js",
+  "devDependencies": {
+    "@types/bun": "latest"
   },
-  "author": "Muhammad Sajeel Sajjad Tipu",
-  "license": "ISC",
-  "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2",
-    "mongoose": "^8.9.1"
-  }
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "start": "bun run index.js"
+  },
+  "type": "module"
 }

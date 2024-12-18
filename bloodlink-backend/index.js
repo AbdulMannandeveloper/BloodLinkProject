@@ -1,14 +1,8 @@
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-const app = express();
-dotenv.config();
-app.use(cors());
-
-app.get("/", (req, res) => {
-  res.send("Hello World!");
+const server = Bun.serve({
+  port: process.env.BLOODLINK_BACKEND_PORT,
+  fetch(req) {
+    return new Response("Bun!");
+  },
 });
 
-app.listen(process.env.BACKEND_PORT, () => {
-  console.log(`Server is running on port ${process.env.BACKEND_PORT.toString()}`);
-});
+console.log(`Listening on http://localhost:${server.port} ...`);
