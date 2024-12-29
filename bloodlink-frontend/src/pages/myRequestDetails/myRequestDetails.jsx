@@ -98,25 +98,6 @@ Thank you.`
       <button className="contact-email-button" onClick={handleEmailRedirect}>
         Contact via Email
       </button>
-      <button
-        onClick={handleDecreasePints}
-        className="decrease-pints-button"
-        disabled={caselocked}
-      >
-        Decrease Pints
-      </button>
-      <button
-        onClick={handleLockCase}
-        className="lock-case-button"
-        disabled={caselocked}
-      >
-        Lock Case
-      </button>
-      {caselocked && (
-        <p className="locked-case-message">
-          This case is locked and cannot be modified.
-        </p>
-      )}
       <Footer />
     </div>
   );

@@ -186,7 +186,7 @@ function Post_Request() {
           </div>
 
           <div className="form-group">
-            <label>
+            <label className="cb">
               <input
                 type="checkbox"
                 name="agreeLegalAction"
@@ -202,7 +202,7 @@ function Post_Request() {
           </div>
 
           <div className="form-group">
-            <label>
+            <label className="cb">
               <input
                 type="checkbox"
                 name="agreeEthicalRequest"
