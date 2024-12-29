@@ -1,0 +1,73 @@
+/* MyRequestDetails.css */
+
+/* General container styling */
+.request-details-container {
+    padding: 50px;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Title of the request */
+  .request-details-container h1 {
+    font-size: 2rem;
+    color: #2c3e50;
+    margin-bottom: 20px;
+  }
+  
+  /* Paragraph styling */
+  .request-details-container p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #34495e;
+    margin-bottom: 10px;
+  }
+  
+  /* Strong tags styling within paragraphs */
+  .request-details-container p strong {
+    color: #2c3e50;
+  }
+  
+  /* Button styling */
+  .request-details-container button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  /* Decrease Pints Button */
+  .decrease-pints-button {
+    background-color: #f39c12;
+    color: white;
+  }
+  
+  .decrease-pints-button:hover {
+    background-color: #d68910;
+  }
+  
+  /* Lock Case Button */
+  .lock-case-button {
+    background-color: #e74c3c;
+    color: white;
+  }
+  
+  .lock-case-button:hover {
+    background-color: #c0392b;
+  }
+  
+  /* Disabled buttons */
+  button:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+  }
+  
+  /* Locked case message */
+  .locked-case-message {
+    font-size: 1.2rem;
+    color: red;
+    margin-top: 20px;
+  }
+  

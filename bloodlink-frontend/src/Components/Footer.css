@@ -1,0 +1,47 @@
+/* Footer Styles */
+.footer {
+    background-color: #cc0000; /* Red background */
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+  }
+  
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  /* Footer Text */
+  .footer-text {
+    margin: 0 0 10px;
+    font-size: 14px;
+  }
+  
+  /* Footer Navigation Bar */
+  .footer-nav {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Space between links */
+  }
+  
+  .footer-link {
+    color: #fff; /* White text for links */
+    text-decoration: none; /* No underline */
+    font-size: 16px; /* Text size */
+    font-weight: bold;
+    transition: color 0.3s ease; /* Smooth color transition on hover */
+  }
+  
+  .footer-link:hover {
+    color: #ffcccc; /* Light red on hover */
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .footer-nav {
+      flex-direction: column; /* Stack links vertically on smaller screens */
+      gap: 10px;
+    }
+  }
+  

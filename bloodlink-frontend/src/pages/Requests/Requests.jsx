@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // For navigation
-import Header from "../Components/Header";
-import Footer from "../Components/Footer";
+import Header from "../../Components/Header";
+import Footer from "../../Components/Footer";
+import "./Requests.css"; // Importing the CSS file
 
 // Sample JSON data
 const requestsData = [
@@ -17,6 +18,7 @@ const requestsData = [
     city: "Sydney",
     pintsRequired: 3,
     caselocked: false,
+    email: "test1@mail.com",
   },
   {
     id: 2,
@@ -30,6 +32,7 @@ const requestsData = [
     city: "Melbourne",
     pintsRequired: 2,
     caselocked: false,
+    email: "test2@mail.com",
   },
   {
     id: 3,
@@ -43,10 +46,11 @@ const requestsData = [
     city: "Brisbane",
     pintsRequired: 4,
     caselocked: false,
+    email: "test3@mail.com",
   },
 ];
 
-const MyRequests = () => {
+const Requests = () => {
   const [filters, setFilters] = useState({ bloodGroup: "", date: "" });
   const [filteredRequests, setFilteredRequests] = useState(requestsData);
 
@@ -81,25 +85,23 @@ const MyRequests = () => {
   };
 
   // Navigate to details page
-  const viewDetails = (id) => {
-    navigate(`/myRequests/${id}`);
+  const viewDetails = (request) => {
+    navigate(`/requests/${request.id}`, { state: { request } });
   };
 
   return (
-    <div style={styles.container}>
+    <div className="container">
       <Header />
-
-      <h1 style={styles.title}>Blood Requests</h1>
+      <h1 className="title">Blood Requests</h1>
 
       {/* Filters Section */}
-      <div style={styles.filters}>
+      <div className="filters">
         <label>
           Blood Group:
           <select
             name="bloodGroup"
             value={filters.bloodGroup}
             onChange={handleFilterChange}
-            style={styles.select}
           >
             <option value="">All</option>
             <option value="O+">O+</option>
@@ -120,45 +122,26 @@ const MyRequests = () => {
             name="date"
             value={filters.date}
             onChange={handleFilterChange}
-            style={styles.input}
           />
         </label>
 
-        <button onClick={applyFilters} style={styles.button}>
-          Apply Filters
-        </button>
+        <button onClick={applyFilters}>Apply Filters</button>
       </div>
 
       {/* Cards Section */}
       <div>
         {filteredRequests.map((request) => (
-          <div key={request.id} style={styles.card}>
-            <h2 style={styles.cardTitle}>{request.title}</h2>
-            <p style={styles.cardText}>
+          <div key={request.id} className="card">
+            <h2 className="card-title">{request.title}</h2>
+            <p className="card-text">
               <strong>Date:</strong> {request.date}
             </p>
-            <p style={styles.cardText}>
+            <p className="card-text">
               <strong>Name:</strong> {request.username}
             </p>
-            <p style={styles.cardText}>
-              <strong>Description:</strong>{" "}
-              {request.description.split(" ").slice(0, 40).join(" ")}...
-            </p>
-            <p style={styles.cardText}>
-              <strong>Blood Group:</strong> {request.bloodGroup}
-            </p>
-            <p style={styles.cardText}>
-              <strong>Hospital:</strong> {request.hospitalName}
-            </p>
-            <p style={styles.cardText}>
-              <strong>City:</strong> {request.city}
-            </p>
-            <p style={styles.cardText}>
-              <strong>Pints Required:</strong> {request.pintsRequired}
-            </p>
             <button
-              onClick={() => viewDetails(request.id)}
-              style={styles.viewButton}
+              onClick={() => viewDetails(request)}
+              className="view-button"
             >
               View Details
             </button>
@@ -170,58 +153,4 @@ const MyRequests = () => {
   );
 };
 
-const styles = {
-  container: {
-    padding: "20px",
-  },
-  title: {
-    textAlign: "center",
-    marginBottom: "20px",
-  },
-  filters: {
-    display: "flex",
-    justifyContent: "center",
-    gap: "15px",
-    marginBottom: "20px",
-  },
-  select: {
-    padding: "5px",
-    marginLeft: "5px",
-  },
-  input: {
-    padding: "5px",
-    marginLeft: "5px",
-  },
-  button: {
-    padding: "5px 10px",
-    backgroundColor: "#4CAF50",
-    color: "white",
-    border: "none",
-    cursor: "pointer",
-  },
-  card: {
-    width: "100%",
-    border: "1px solid #ddd",
-    borderRadius: "8px",
-    padding: "15px",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-    marginBottom: "20px",
-  },
-  cardTitle: {
-    fontSize: "18px",
-    marginBottom: "10px",
-  },
-  cardText: {
-    margin: "5px 0",
-  },
-  viewButton: {
-    padding: "5px 10px",
-    backgroundColor: "#007BFF",
-    color: "white",
-    border: "none",
-    cursor: "pointer",
-    marginTop: "10px",
-  },
-};
-
-export default MyRequests;
+export default Requests;

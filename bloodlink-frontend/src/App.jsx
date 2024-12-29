@@ -2,15 +2,15 @@ import { BrowserRouter as Router, Routes, Route, BrowserRouter } from 'react-rou
 import './App.css';
 
 // Import pages from the "pages" folder
-import HomePage from './pages/Home_Page.jsx';
-import AboutPage from './pages/About_Us';
-import Requests from './pages/Requests';
-import Post from './pages/Post_Request';
-import Login from './pages/LogIn';
-import SignUp from './pages/Sign_up';
-import RequestDetails from "./pages/RequestDetails";
-import MyRequestDetails from "./pages/myRequestDetails";
-import MyRequests from './pages/myRequests';
+import HomePage from './pages/HomePage/Home_Page.jsx';
+import AboutPage from './pages/About_Us/About_Us.jsx';
+import Requests from './pages/Requests/Requests.jsx';
+import Post from './pages/PostRequest/Post_Request.jsx';
+import Login from './pages/Login/LogIn.jsx';
+import SignUp from './pages/SignUp/Sign_up.jsx';
+import RequestDetails from "./pages/RequestDetails/RequestDetails.jsx";
+import MyRequestDetails from "./pages/myRequestDetails/myRequestDetails.jsx";
+import MyRequests from './pages/myRequest/myRequests.jsx';
 
 function App() {
   return (

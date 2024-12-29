@@ -1,50 +1,28 @@
 import React from "react";
+import { Link } from "react-router-dom";  // Import the Link component
 
 const Footer = () => {
   return (
-    <footer style={styles.footer}>
-      <div style={styles.container}>
-        <p style={styles.text}>© 2024 Your Company Name. All rights reserved.</p>
-        <nav style={styles.nav}>
-          <a href="/about_us" style={styles.link}>
+    <footer className="footer">
+      <div className="footer-container">
+        <p className="footer-text">© 2024 Your Company Name. All rights reserved.</p>
+        <nav className="footer-nav">
+          <Link to="/about" className="footer-link">
             About Us
-          </a>
-          <a href="/contact" style={styles.link}>
-            Contact
-          </a>
-          <a href="/privacy" style={styles.link}>
-            Privacy Policy
-          </a>
+          </Link>
+          <Link to="/Post_Request" className="footer-link">
+            Post Request
+          </Link>
+          <Link to="/Requests" className="footer-link">
+            Requests
+          </Link>
+          <Link to="/myRequests" className="footer-link">
+            My Requests
+          </Link>
         </nav>
       </div>
     </footer>
   );
-};
-
-const styles = {
-  footer: {
-    backgroundColor: "#333",
-    color: "#fff",
-    padding: "20px 0",
-    textAlign: "center",
-  },
-  container: {
-    maxWidth: "1200px",
-    margin: "0 auto",
-    padding: "0 20px",
-  },
-  text: {
-    margin: "0 0 10px",
-  },
-  nav: {
-    display: "flex",
-    justifyContent: "center",
-    gap: "15px",
-  },
-  link: {
-    color: "#fff",
-    textDecoration: "none",
-  },
 };
 
 export default Footer;

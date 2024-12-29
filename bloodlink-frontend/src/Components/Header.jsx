@@ -1,57 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import "./Header.css"; // Make sure to import the CSS file
 
 const Header = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
-    <header style={styles.header}>
-      <div style={styles.container}>
-        <h1 style={styles.logo}>Your Company Name</h1>
-        <nav style={styles.nav}>
-          <Link to="/about" style={styles.link}>
-            About Us
-          </Link>
-          <Link to="/Post_Request" style={styles.link}>
-            Post Request
-          </Link>
-          <Link to="/Requests" style={styles.link}>
-            Requests
-          </Link>
-          <Link to="/myRequests" style={styles.link}>
-            My Requests
-          </Link>
+    <header>
+      <div className="header-container">
+        <h1 className="logo">Bloodlink</h1>
+        <nav className={`nav ${isMenuOpen ? "active" : ""}`}>
+          <Link to="/about" className="link">About Us</Link>
+          <Link to="/Post_Request" className="link">Post Request</Link>
+          <Link to="/Requests" className="link">Requests</Link>
+          <Link to="/myRequests" className="link">My Requests</Link>
         </nav>
+        <div className="hamburger" onClick={toggleMenu}>
+          <span className="bar"></span>
+          <span className="bar"></span>
+          <span className="bar"></span>
+        </div>
       </div>
     </header>
   );
-};
-
-const styles = {
-  header: {
-    backgroundColor: "#4CAF50",
-    padding: "10px 0",
-    color: "#fff",
-  },
-  container: {
-    maxWidth: "1200px",
-    margin: "0 auto",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: "0 20px",
-  },
-  logo: {
-    fontSize: "24px",
-    fontWeight: "bold",
-  },
-  nav: {
-    display: "flex",
-    gap: "15px",
-  },
-  link: {
-    color: "#fff",
-    textDecoration: "none",
-    fontSize: "16px",
-  },
 };
 
 export default Header;

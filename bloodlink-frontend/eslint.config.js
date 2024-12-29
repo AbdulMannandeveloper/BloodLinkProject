@@ -8,7 +8,7 @@ export default [
   { ignores: ['dist'] },
   {
     files: ['**/*.{js,jsx}'],
-    languageOptions: {c
+    languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
       parserOptions: {

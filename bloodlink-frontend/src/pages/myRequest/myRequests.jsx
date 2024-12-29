@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // For navigation
-import Header from "../Components/Header";
-import Footer from "../Components/Footer";
+import Header from "../../Components/Header";
+import Footer from "../../Components/Footer";
+import "./myRequests.css"; // Import the CSS file
 
 // Sample JSON data
 const requestsData = [
@@ -46,7 +47,7 @@ const requestsData = [
   },
 ];
 
-const Requests = () => {
+const MyRequests = () => {
   const [filters, setFilters] = useState({ bloodGroup: "", date: "" });
   const [filteredRequests, setFilteredRequests] = useState(requestsData);
 
@@ -82,24 +83,24 @@ const Requests = () => {
 
   // Navigate to details page
   const viewDetails = (id) => {
-    navigate(`/requests/${id}`);
+    navigate(`/myRequests/${id}`);
   };
 
   return (
-    <div style={styles.container}>
+    <div className="container">
       <Header />
 
-      <h1 style={styles.title}>Blood Requests</h1>
+      <h1 className="title">Blood Requests</h1>
 
       {/* Filters Section */}
-      <div style={styles.filters}>
+      <div className="filters">
         <label>
           Blood Group:
           <select
             name="bloodGroup"
             value={filters.bloodGroup}
             onChange={handleFilterChange}
-            style={styles.select}
+            className="select"
           >
             <option value="">All</option>
             <option value="O+">O+</option>
@@ -120,11 +121,11 @@ const Requests = () => {
             name="date"
             value={filters.date}
             onChange={handleFilterChange}
-            style={styles.input}
+            className="input"
           />
         </label>
 
-        <button onClick={applyFilters} style={styles.button}>
+        <button onClick={applyFilters} className="button">
           Apply Filters
         </button>
       </div>
@@ -132,33 +133,33 @@ const Requests = () => {
       {/* Cards Section */}
       <div>
         {filteredRequests.map((request) => (
-          <div key={request.id} style={styles.card}>
-            <h2 style={styles.cardTitle}>{request.title}</h2>
-            <p style={styles.cardText}>
+          <div key={request.id} className="card">
+            <h2 className="cardTitle">{request.title}</h2>
+            <p className="cardText">
               <strong>Date:</strong> {request.date}
             </p>
-            <p style={styles.cardText}>
+            <p className="cardText">
               <strong>Name:</strong> {request.username}
             </p>
-            <p style={styles.cardText}>
+            <p className="cardText">
               <strong>Description:</strong>{" "}
               {request.description.split(" ").slice(0, 40).join(" ")}...
             </p>
-            <p style={styles.cardText}>
+            <p className="cardText">
               <strong>Blood Group:</strong> {request.bloodGroup}
             </p>
-            <p style={styles.cardText}>
+            <p className="cardText">
               <strong>Hospital:</strong> {request.hospitalName}
             </p>
-            <p style={styles.cardText}>
+            <p className="cardText">
               <strong>City:</strong> {request.city}
             </p>
-            <p style={styles.cardText}>
+            <p className="cardText">
               <strong>Pints Required:</strong> {request.pintsRequired}
             </p>
             <button
               onClick={() => viewDetails(request.id)}
-              style={styles.viewButton}
+              className="viewButton"
             >
               View Details
             </button>
@@ -170,58 +171,4 @@ const Requests = () => {
   );
 };
 
-const styles = {
-  container: {
-    padding: "20px",
-  },
-  title: {
-    textAlign: "center",
-    marginBottom: "20px",
-  },
-  filters: {
-    display: "flex",
-    justifyContent: "center",
-    gap: "15px",
-    marginBottom: "20px",
-  },
-  select: {
-    padding: "5px",
-    marginLeft: "5px",
-  },
-  input: {
-    padding: "5px",
-    marginLeft: "5px",
-  },
-  button: {
-    padding: "5px 10px",
-    backgroundColor: "#4CAF50",
-    color: "white",
-    border: "none",
-    cursor: "pointer",
-  },
-  card: {
-    width: "100%",
-    border: "1px solid #ddd",
-    borderRadius: "8px",
-    padding: "15px",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-    marginBottom: "20px",
-  },
-  cardTitle: {
-    fontSize: "18px",
-    marginBottom: "10px",
-  },
-  cardText: {
-    margin: "5px 0",
-  },
-  viewButton: {
-    padding: "5px 10px",
-    backgroundColor: "#007BFF",
-    color: "white",
-    border: "none",
-    cursor: "pointer",
-    marginTop: "10px",
-  },
-};
-
-export default Requests;
+export default MyRequests;

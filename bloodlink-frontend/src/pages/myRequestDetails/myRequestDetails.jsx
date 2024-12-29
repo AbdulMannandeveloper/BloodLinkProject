@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import Header from "../Components/Header";
-import Footer from "../Components/Footer";
+import Header from "../../Components/Header";
+import Footer from "../../Components/Footer";
+import "./MyRequestDetails.css"; // Importing the CSS file
 
 const requestsData = [
   {
     id: 1,
     title: "Urgent Blood Needed",
-    usernmae: "Test1",
+    username: "Test1",
     date: "2024-12-14",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
@@ -20,7 +21,7 @@ const requestsData = [
   {
     id: 2,
     title: "Blood Donation Request",
-    usernmae: "Test2",
+    username: "Test2",
     date: "2024-12-15",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
@@ -74,58 +75,59 @@ const MyRequestDetails = () => {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div>
       <Header />
-      <h1>{request.title}</h1>
-      <p>
-        <strong>Date:</strong> {request.date}
-      </p>
-      <p>
-        <strong>Name:</strong> {request.usernmae}
-      </p>
-      <p>
-        <strong>Description:</strong> {request.description}
-      </p>
-      <p>
-        <strong>Blood Group:</strong> {request.bloodGroup}
-      </p>
-      <p>
-        <strong>Hospital:</strong> {request.hospitalName}
-      </p>
-      <p>
-        <strong>City:</strong> {request.city}
-      </p>
-      <p>
-        <strong>Pints Required:</strong> {request.pintsRequired}
-      </p>
-      <p>
-        <strong>Case Locked:</strong> {request.caselocked ? "Yes" : "No"}
-      </p>
-
-      {/* Decrease Pints Button */}
-      <button
-        onClick={handleDecreasePints}
-        style={{ margin: "10px", padding: "10px", backgroundColor: "#f39c12", color: "white", border: "none", borderRadius: "5px" }}
-        disabled={request.caselocked}
-      >
-        Decrease Pints
-      </button>
-
-      {/* Lock Case Button */}
-      <button
-        onClick={handleLockCase}
-        style={{ margin: "10px", padding: "10px", backgroundColor: "#e74c3c", color: "white", border: "none", borderRadius: "5px" }}
-        disabled={request.caselocked}
-      >
-        Lock Case
-      </button>
-
-      {request.caselocked && (
-        <p style={{ color: "red", fontWeight: "bold" }}>
-          This case is locked and cannot be modified.
+      <div className="request-details-container">
+        <h1>{request.title}</h1>
+        <p>
+          <strong>Date:</strong> {request.date}
         </p>
-      )}
+        <p>
+          <strong>Name:</strong> {request.username}
+        </p>
+        <p>
+          <strong>Description:</strong> {request.description}
+        </p>
+        <p>
+          <strong>Blood Group:</strong> {request.bloodGroup}
+        </p>
+        <p>
+          <strong>Hospital:</strong> {request.hospitalName}
+        </p>
+        <p>
+          <strong>City:</strong> {request.city}
+        </p>
+        <p>
+          <strong>Pints Required:</strong> {request.pintsRequired}
+        </p>
+        <p>
+          <strong>Case Locked:</strong> {request.caselocked ? "Yes" : "No"}
+        </p>
 
+        {/* Decrease Pints Button */}
+        <button
+          onClick={handleDecreasePints}
+          className="decrease-pints-button"
+          disabled={request.caselocked}
+        >
+          Decrease Pints
+        </button>
+
+        {/* Lock Case Button */}
+        <button
+          onClick={handleLockCase}
+          className="lock-case-button"
+          disabled={request.caselocked}
+        >
+          Lock Case
+        </button>
+
+        {request.caselocked && (
+          <p className="locked-case-message">
+            This case is locked and cannot be modified.
+          </p>
+        )}
+      </div>
       <Footer />
     </div>
   );
