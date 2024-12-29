@@ -2,19 +2,21 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../Components/Header";
 import Footer from "../../Components/Footer";
-import "./PostRequest.css"; // Importing the CSS file
+import axios from "axios";
+import "./PostRequest.css";
 
 function Post_Request() {
   const [formData, setFormData] = useState({
     title: "",
-    bloodGroup: "",
-    totalPints: "",
-    hospitalName: "",
-    description: "",
-    city: "",
     dateRequired: "",
+    description: "",
+    bloodGroup: "",
+    hospitalName: "",
+    city: "",
+    totalPints: "",
     agreeLegalAction: false,
     agreeEthicalRequest: false,
+    caselocked: false,
   });
 
   const [errors, setErrors] = useState({});
@@ -33,8 +35,10 @@ function Post_Request() {
     if (!formData.bloodGroup) newErrors.bloodGroup = "Blood group is required";
     if (!formData.totalPints || isNaN(formData.totalPints))
       newErrors.totalPints = "Total pints must be a valid number";
-    if (!formData.hospitalName) newErrors.hospitalName = "Hospital name is required";
-    if (!formData.description) newErrors.description = "Description is required";
+    if (!formData.hospitalName)
+      newErrors.hospitalName = "Hospital name is required";
+    if (!formData.description)
+      newErrors.description = "Description is required";
     if (!formData.city) newErrors.city = "City is required";
     if (!formData.dateRequired) newErrors.dateRequired = "Date is required";
     if (!formData.agreeLegalAction)
@@ -60,6 +64,18 @@ function Post_Request() {
         dateRequired: "",
         agreeLegalAction: false,
         agreeEthicalRequest: false,
+        caselocked: false,
+      });
+      axios.post("http://localhost:7777/Request", {
+        title: formData.title,
+        username: localStorage.getItem("name"),
+        date: formData.dateRequired,
+        description: formData.description,
+        bloodGroup: formData.bloodGroup,
+        hospitalName: formData.hospitalName,
+        city: formData.city,
+        pintsRequired: formData.totalPints,
+        caseLocked: formData.caselocked,
       });
     }
   };
@@ -123,7 +139,9 @@ function Post_Request() {
               onChange={handleInputChange}
               placeholder="Enter hospital name"
             />
-            {errors.hospitalName && <p className="error">{errors.hospitalName}</p>}
+            {errors.hospitalName && (
+              <p className="error">{errors.hospitalName}</p>
+            )}
           </div>
 
           <div className="form-group">
@@ -135,7 +153,9 @@ function Post_Request() {
               onChange={handleInputChange}
               placeholder="Provide details about the case"
             />
-            {errors.description && <p className="error">{errors.description}</p>}
+            {errors.description && (
+              <p className="error">{errors.description}</p>
+            )}
           </div>
 
           <div className="form-group">
@@ -160,7 +180,9 @@ function Post_Request() {
               value={formData.dateRequired}
               onChange={handleInputChange}
             />
-            {errors.dateRequired && <p className="error">{errors.dateRequired}</p>}
+            {errors.dateRequired && (
+              <p className="error">{errors.dateRequired}</p>
+            )}
           </div>
 
           <div className="form-group">
@@ -171,9 +193,12 @@ function Post_Request() {
                 checked={formData.agreeLegalAction}
                 onChange={handleInputChange}
               />
-              I confirm that I will face legal actions for submitting any illegal or false requests.
+              I confirm that I will face legal actions for submitting any
+              illegal or false requests.
             </label>
-            {errors.agreeLegalAction && <p className="error">{errors.agreeLegalAction}</p>}
+            {errors.agreeLegalAction && (
+              <p className="error">{errors.agreeLegalAction}</p>
+            )}
           </div>
 
           <div className="form-group">
@@ -186,7 +211,9 @@ function Post_Request() {
               />
               I confirm that this request is ethical and necessary.
             </label>
-            {errors.agreeEthicalRequest && <p className="error">{errors.agreeEthicalRequest}</p>}
+            {errors.agreeEthicalRequest && (
+              <p className="error">{errors.agreeEthicalRequest}</p>
+            )}
           </div>
 
           <button type="submit" className="btn btn-primary">

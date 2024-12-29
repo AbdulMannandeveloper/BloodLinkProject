@@ -1,22 +1,40 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import './SignUp.css'; // Import the CSS file for styling
-
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import "./SignUp.css"; // Import the CSS file for styling
 function SignUp() {
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [name, setName] = useState('');
-  const [cnic, setCnic] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [bloodGroup, setBloodGroup] = useState('');
-  const [address, setAddress] = useState('');
-  const [city, setCity] = useState('');
+
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [name, setName] = useState("");
+  const [cnic, setCnic] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [bloodGroup, setBloodGroup] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
 
   const handleRegister = (e) => {
     e.preventDefault();
-    // Add registration logic here (e.g., API call to register user)
-    console.log('Registering with:', {
+    axios
+      .post("http://localhost:7777/SignUp", {
+        email,
+        phone,
+        name,
+        cnic,
+        password,
+        confirmPassword,
+        bloodGroup,
+        address,
+        city,
+      })
+      .then((response) => {
+        console.log("Registration successful:", response.data);
+      })
+      .catch((error) => {
+        console.error("Registration failed:", error);
+      });
+    console.log("Registering with:", {
       email,
       phone,
       name,
@@ -31,7 +49,7 @@ function SignUp() {
 
   const handleLoginRedirect = () => {
     // Add login redirection logic here (e.g., navigate to login page)
-    console.log('Redirecting to login page');
+    console.log("Redirecting to login page");
   };
 
   return (
@@ -150,13 +168,15 @@ function SignUp() {
             />
           </div>
           <div className="button-group">
-            <button type="submit" className="btn-primary">Sign Up</button>
+            <button type="submit" className="btn-primary">
+              Sign Up
+            </button>
             <Link to="/LogIn">
               <button
                 type="button"
                 className="btn-secondary"
                 onClick={handleLoginRedirect}
-                style={{ marginLeft: '10px' }}
+                style={{ marginLeft: "10px" }}
               >
                 Already Have an Account
               </button>

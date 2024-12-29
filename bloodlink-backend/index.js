@@ -9,30 +9,19 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect(process.env.BLOODLINK_MONGODB_URI, {});
+mongoose.connect(process.env.BLOODLINK_MONGODB_URI);
 
 app.post("/SignUp", async (req, res) => {
-  const {
-    email,
-    phone,
-    name,
-    cnic,
-    password,
-    confirmPassword,
-    bloodGroup,
-    address,
-    city,
-  } = req.body;
+  const { email, phone, name, cnic, password, bloodGroup, address, city } =
+    req.body;
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const hashedConfirmPassword = await bcrypt.hash(confirmPassword, 10);
     const user = await User.create({
       email,
       phone,
       name,
       cnic,
       password: hashedPassword,
-      confirmPassword: hashedConfirmPassword,
       bloodGroup,
       address,
       city,
@@ -56,7 +45,7 @@ app.post("/Login", async (req, res) => {
     if (!isMatch) {
       return res.status(400).json({ error: "Invalid credentials" });
     }
-    res.status(200).json({ user });
+    res.status(200).json({ user: user.name });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -64,26 +53,26 @@ app.post("/Login", async (req, res) => {
 app.post("/Request", async (req, res) => {
   const {
     title,
-   // username,
+    username,
     date,
     description,
     bloodGroup,
     hospitalName,
     city,
     pintsRequired,
- //   caselocked,
+    caselocked,
   } = req.body;
   try {
     const request = await Request.create({
       title,
-   //   username,
+      username,
       date,
       description,
       bloodGroup,
       hospitalName,
       city,
       pintsRequired,
-//      caselocked,
+      caselocked,
     });
     console.log(request);
     await request.save();
@@ -100,10 +89,10 @@ app.get("/Requests", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-app.get("/Requests/:userId", async (req, res) => {
-  const { userId } = req.params;
+app.get("/Requests/:username", async (req, res) => {
+  const { username } = req.params;
   try {
-    const requests = await Request.find({ username: userId });
+    const requests = await Request.find({ username: username });
     if (!requests.length) {
       return res.status(404).json({ error: "No requests found for this user" });
     }
@@ -112,40 +101,41 @@ app.get("/Requests/:userId", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-app.put("/Requests/:userId", async (req, res) => {
-  const { id } = req.params;
-  const { pintsRequired } = req.body;
-  try {
-    const request = await Request.findByIdAndUpdate(
-      id,
-      { pintsRequired },
-      { new: true }
-    );
-    if (!request) {
-      return res.status(404).json({ error: "Request not found" });
-    }
-    res.status(200).json({ request });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-app.put("/Requests/:userId", async (req, res) => {
-  const { id } = req.params;
-  const { caselocked } = req.body;
-  try {
-    const request = await Request.findByIdAndUpdate(
-      id,
-      { caselocked },
-      { new: true }
-    );
-    if (!request) {
-      return res.status(404).json({ error: "Request not found" });
-    }
-    res.status(200).json({ request });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
+// app.put("/Requests/:username/pints", async (req, res) => {
+//   const { username } = req.params;
+//   const { pintsRequired } = req.body;
+//   try {
+//     const request = await Request.findOneAndUpdate(
+//       { username },
+//       { pintsRequired },
+//       { new: true }
+//     );
+//     if (!request) {
+//       return res.status(404).json({ error: "Request not found" });
+//     }
+//     console.log(request);
+//     res.status(200).json({ request });
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// });
+// app.put("/Requests/:username", async (req, res) => {
+//   const { username } = req.params;
+//   const { caselocked } = req.body;
+//   try {
+//     const request = await Request.findOneAndUpdate(
+//       { username },
+//       { caselocked },
+//       { new: true }
+//     );
+//     if (!request) {
+//       return res.status(404).json({ error: "Request not found" });
+//     }
+//     res.status(200).json({ request });
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// });
 app.listen(process.env.BLOODLINK_BACKEND_PORT, () => {
   console.log(
     `Server is running on port ${process.env.BLOODLINK_BACKEND_PORT}`

@@ -21,7 +21,7 @@ I am reaching out regarding the blood donation request:
 
 Title: ${request.title}
 Name: ${request.username}
-Date: ${request.date}
+Date: ${new Date(request.date).toLocaleDateString()}
 Blood Group: ${request.bloodGroup}
 Hospital: ${request.hospitalName}
 City: ${request.city}

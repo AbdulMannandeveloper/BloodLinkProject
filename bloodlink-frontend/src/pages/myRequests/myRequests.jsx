@@ -1,59 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom"; // For navigation
 import Header from "../../Components/Header";
 import Footer from "../../Components/Footer";
 import "./myRequests.css"; // Import the CSS file
 
-// Sample JSON data
-const requestsData = [
-  {
-    id: 1,
-    title: "Urgent Blood Needed",
-    username: "Test1",
-    date: "2024-12-14",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    bloodGroup: "O+",
-    hospitalName: "City Hospital",
-    city: "Sydney",
-    pintsRequired: 3,
-    caselocked: false,
-  },
-  {
-    id: 2,
-    title: "Blood Donation Request",
-    username: "Test2",
-    date: "2024-12-15",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    bloodGroup: "A-",
-    hospitalName: "General Hospital",
-    city: "Melbourne",
-    pintsRequired: 2,
-    caselocked: false,
-  },
-  {
-    id: 3,
-    title: "Emergency Blood Needed",
-    username: "Test3",
-    date: "2024-12-13",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    bloodGroup: "AB+",
-    hospitalName: "Royal Clinic",
-    city: "Brisbane",
-    pintsRequired: 4,
-    caselocked: false,
-  },
-];
-
 const MyRequests = () => {
   const [filters, setFilters] = useState({ bloodGroup: "", date: "" });
-  const [filteredRequests, setFilteredRequests] = useState(requestsData);
+  const [requests, setRequests] = useState([]); // State to store all requests
+  const [filteredRequests, setFilteredRequests] = useState([]); // State to store filtered requests
+  const currentUsername = localStorage.getItem("name");
 
   const navigate = useNavigate(); // Navigation hook
 
-  // Handle filter changes
+  useEffect(() => {
+    const fetchRequests = async () => {
+      try {
+        await axios
+          .get(`http://localhost:7777/Requests/${currentUsername}`)
+          .then((response) => {
+            console.log(response.data);
+            setRequests(response.data.requests);
+            setFilteredRequests(response.data.requests); // Initially display all requests
+          });
+      } catch (error) {
+        console.error("Error fetching requests:", error);
+      }
+    };
+
+    fetchRequests();
+  }, [currentUsername]);
+
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters((prevFilters) => ({
@@ -62,9 +39,8 @@ const MyRequests = () => {
     }));
   };
 
-  // Apply filters
   const applyFilters = () => {
-    let filtered = requestsData;
+    let filtered = requests;
 
     if (filters.bloodGroup) {
       filtered = filtered.filter(
@@ -81,9 +57,8 @@ const MyRequests = () => {
     setFilteredRequests(filtered);
   };
 
-  // Navigate to details page
-  const viewDetails = (id) => {
-    navigate(`/myRequests/${id}`);
+  const viewDetails = (request) => {
+    navigate(`/myRequests/${request.title}`, { state: { request } });
   };
 
   return (
@@ -92,7 +67,6 @@ const MyRequests = () => {
 
       <h1 className="title">Blood Requests</h1>
 
-      {/* Filters Section */}
       <div className="filters">
         <label>
           Blood Group:
@@ -130,13 +104,13 @@ const MyRequests = () => {
         </button>
       </div>
 
-      {/* Cards Section */}
       <div>
         {filteredRequests.map((request) => (
           <div key={request.id} className="card">
             <h2 className="cardTitle">{request.title}</h2>
             <p className="cardText">
-              <strong>Date:</strong> {request.date}
+              <strong>Date:</strong>{" "}
+              {new Date(request.date).toLocaleDateString()}
             </p>
             <p className="cardText">
               <strong>Name:</strong> {request.username}
@@ -157,10 +131,7 @@ const MyRequests = () => {
             <p className="cardText">
               <strong>Pints Required:</strong> {request.pintsRequired}
             </p>
-            <button
-              onClick={() => viewDetails(request.id)}
-              className="viewButton"
-            >
+            <button onClick={() => viewDetails(request)} className="viewButton">
               View Details
             </button>
           </div>

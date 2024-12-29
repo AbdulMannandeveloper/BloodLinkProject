@@ -7,10 +7,10 @@ const requestSchema = new Schema({
     type: String,
     required: true,
   },
- // username: {
-   // type: String,
-    //required: true,
-  //},
+  username: {
+    type: String,
+    required: true,
+  },
   date: {
     type: Date,
     required: true,
@@ -35,10 +35,10 @@ const requestSchema = new Schema({
     type: Number,
     required: true,
   },
-  //caselocked: {
-  //type: Boolean,
-  //default: false
-  //}
+  caselocked: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Request = mongoose.model("Request", requestSchema);

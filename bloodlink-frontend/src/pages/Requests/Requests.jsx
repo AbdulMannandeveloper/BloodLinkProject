@@ -1,60 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom"; // For navigation
 import Header from "../../Components/Header";
 import Footer from "../../Components/Footer";
 import "./Requests.css"; // Importing the CSS file
 
-// Sample JSON data
-const requestsData = [
-  {
-    id: 1,
-    title: "Urgent Blood Needed",
-    username: "Test1",
-    date: "2024-12-14",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    bloodGroup: "O+",
-    hospitalName: "City Hospital",
-    city: "Sydney",
-    pintsRequired: 3,
-    caselocked: false,
-    email: "test1@mail.com",
-  },
-  {
-    id: 2,
-    title: "Blood Donation Request",
-    username: "Test2",
-    date: "2024-12-15",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    bloodGroup: "A-",
-    hospitalName: "General Hospital",
-    city: "Melbourne",
-    pintsRequired: 2,
-    caselocked: false,
-    email: "test2@mail.com",
-  },
-  {
-    id: 3,
-    title: "Emergency Blood Needed",
-    username: "Test3",
-    date: "2024-12-13",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    bloodGroup: "AB+",
-    hospitalName: "Royal Clinic",
-    city: "Brisbane",
-    pintsRequired: 4,
-    caselocked: false,
-    email: "test3@mail.com",
-  },
-];
-
 const Requests = () => {
+  const [requestsData, setRequestsData] = useState([]);
   const [filters, setFilters] = useState({ bloodGroup: "", date: "" });
-  const [filteredRequests, setFilteredRequests] = useState(requestsData);
+  const [filteredRequests, setFilteredRequests] = useState([]);
 
   const navigate = useNavigate(); // Navigation hook
+
+  useEffect(() => {
+    axios.get("http://localhost:7777/Requests").then((response) => {
+      console.log(response.data.requests);
+      setRequestsData(response.data.requests);
+      setFilteredRequests(response.data.requests); // Set initial filtered requests
+    });
+  }, []);
 
   // Handle filter changes
   const handleFilterChange = (e) => {
@@ -84,9 +48,8 @@ const Requests = () => {
     setFilteredRequests(filtered);
   };
 
-  // Navigate to details page
   const viewDetails = (request) => {
-    navigate(`/requests/${request.id}`, { state: { request } });
+    navigate(`/Requests/${request.title}`, { state: { request } });
   };
 
   return (
@@ -94,7 +57,6 @@ const Requests = () => {
       <Header />
       <h1 className="title">Blood Requests</h1>
 
-      {/* Filters Section */}
       <div className="filters">
         <label>
           Blood Group:
@@ -128,16 +90,12 @@ const Requests = () => {
         <button onClick={applyFilters}>Apply Filters</button>
       </div>
 
-      {/* Cards Section */}
       <div>
         {filteredRequests.map((request) => (
           <div key={request.id} className="card">
             <h2 className="card-title">{request.title}</h2>
             <p className="card-text">
-              <strong>Date:</strong> {request.date}
-            </p>
-            <p className="card-text">
-              <strong>Name:</strong> {request.username}
+              <strong>Date:</strong> {new Date(request.date).toLocaleDateString()}
             </p>
             <button
               onClick={() => viewDetails(request)}
